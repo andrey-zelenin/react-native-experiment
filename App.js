@@ -1,23 +1,51 @@
-console.disableYellowBox = true; // TODO
+import { Navigation } from "react-native-navigation";
+import { Provider } from "react-redux";
 
-import React, { Component } from 'react';
-import { StyleProvider } from 'native-base';
-import { Provider } from 'mobx-react';
+import AuthScreen from "./src/screens/Auth/Auth";
+import SharePlaceScreen from "./src/screens/SharePlace/SharePlace";
+import FindPlaceScreen from "./src/screens/FindPlace/FindPlace";
+import PlaceDetailScreen from "./src/screens/PlaceDetail/PlaceDetail";
+import SideDrawer from "./src/screens/SideDrawer/SideDrawer";
+import configureStore from "./src/store/configureStore";
 
-import AppNavigator from './app/navigator';
-import stores from './app/stores';
+const store = configureStore();
 
-import getTheme from './native-base-theme/components';
-import custom from './native-base-theme/variables/custom';
+// Register Screens
+Navigation.registerComponent(
+  "awesome-places.AuthScreen",
+  () => AuthScreen,
+  store,
+  Provider
+);
+Navigation.registerComponent(
+  "awesome-places.SharePlaceScreen",
+  () => SharePlaceScreen,
+  store,
+  Provider
+);
+Navigation.registerComponent(
+  "awesome-places.FindPlaceScreen",
+  () => FindPlaceScreen,
+  store,
+  Provider
+);
+Navigation.registerComponent(
+  "awesome-places.PlaceDetailScreen",
+  () => PlaceDetailScreen,
+  store,
+  Provider
+);
+Navigation.registerComponent(
+  "awesome-places.SideDrawer",
+  () => SideDrawer,
+  store,
+  Provider
+);
 
-export default class App extends Component {
-  render() {
-    return (
-      <Provider stores={stores}>
-        <StyleProvider style={getTheme(custom)}>
-          <AppNavigator/>
-        </StyleProvider>
-      </Provider>
-    );
+// Start a App
+export default () => Navigation.startSingleScreenApp({
+  screen: {
+    screen: "awesome-places.AuthScreen",
+    title: "Login"
   }
-}
+});
