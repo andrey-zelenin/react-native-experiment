@@ -6,7 +6,7 @@ import configureStore from './src/store/configureStore';
 
 const store = configureStore();
 
-const App = () => (
+const rnexperiment = () => (
     <Provider store={store}>
         <App />
     </Provider>
@@ -14,4 +14,4 @@ const App = () => (
 
 App();
 
-AppRegistry.registerComponent('rnexperiment', () => App);
+AppRegistry.registerComponent('rnexperiment', () => rnexperiment);

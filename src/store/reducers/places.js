@@ -3,7 +3,7 @@ import {
   REMOVE_PLACE,
   PLACE_ADDED,
   START_ADD_PLACE
-} from "../actions/actionTypes";
+} from '../actions/actionTypes';
 
 const initialState = {
   places: [],

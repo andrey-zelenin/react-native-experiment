@@ -1,13 +1,6 @@
-import React, { Component } from "react";
-import {
-  View,
-  Image,
-  Button,
-  StyleSheet,
-  Text,
-  Dimensions
-} from "react-native";
-import MapView from "react-native-maps";
+import React, { Component } from 'react';
+import { View, Button, StyleSheet, Dimensions } from 'react-native';
+import MapView from 'react-native-maps';
 
 class PickLocation extends Component {
 
@@ -22,8 +15,8 @@ class PickLocation extends Component {
         longitude: -122.4013726,
         latitudeDelta: 0.0122,
         longitudeDelta:
-          Dimensions.get("window").width /
-          Dimensions.get("window").height *
+          Dimensions.get('window').width /
+          Dimensions.get('window').height *
           0.0122
       },
       locationChosen: false
@@ -67,7 +60,7 @@ class PickLocation extends Component {
     },
   err => {
     console.log(err);
-    alert("Fetching the Position failed, please pick one manually!");
+    alert('Fetching the Position failed, please pick one manually!');
   })
   }
 
@@ -90,7 +83,7 @@ class PickLocation extends Component {
           {marker}
         </MapView>
         <View style={styles.button}>
-          <Button title="Locate Me" onPress={this.getLocationHandler} />
+          <Button title='Locate Me' onPress={this.getLocationHandler} />
         </View>
       </View>
     );
@@ -99,11 +92,11 @@ class PickLocation extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
-    alignItems: "center"
+    width: '100%',
+    alignItems: 'center'
   },
   map: {
-    width: "100%",
+    width: '100%',
     height: 250
   },
   button: {

@@ -3,8 +3,9 @@ import {
   REMOVE_PLACE,
   PLACE_ADDED,
   START_ADD_PLACE
-} from "./actionTypes";
-import { uiStartLoading, uiStopLoading, authGetToken } from "./index";
+} from './actionTypes';
+import { uiStartLoading, uiStopLoading, authGetToken } from './index';
+import { FETCH_DATA_API, STORAGE_IMAGE_API }  from '../../../config'
 
 export const startAddPlace = () => {
   return {
@@ -18,26 +19,26 @@ export const addPlace = (placeName, location, image) => {
     dispatch(uiStartLoading());
     dispatch(authGetToken())
       .catch(() => {
-        alert("No valid token found!");
+        alert('No valid token found!');
       })
       .then(token => {
         authToken = token;
         return fetch(
-          "", // your storeImage API
+          STORAGE_IMAGE_API, // your storeImage API
           {
-            method: "POST",
+            method: 'POST',
             body: JSON.stringify({
               image: image.base64
             }),
             headers: {
-              Authorization: "Bearer " + authToken
+              Authorization: 'Bearer ' + authToken
             }
           }
         );
       })
       .catch(err => {
         console.log(err);
-        alert("Something went wrong, please try again!");
+        alert('Something went wrong, please try again!');
         dispatch(uiStopLoading());
       })
       .then(res => {
@@ -55,10 +56,10 @@ export const addPlace = (placeName, location, image) => {
           imagePath: parsedRes.imagePath
         };
         return fetch(
-          "your firebase API to fetch" +
+          FETCH_DATA_API +
             authToken,
           {
-            method: "POST",
+            method: 'POST',
             body: JSON.stringify(placeData)
           }
         );
@@ -77,7 +78,7 @@ export const addPlace = (placeName, location, image) => {
       })
       .catch(err => {
         console.log(err);
-        alert("Something went wrong, please try again!");
+        alert('Something went wrong, please try again!');
         dispatch(uiStopLoading());
       });
   };
@@ -94,12 +95,12 @@ export const getPlaces = () => {
     dispatch(authGetToken())
       .then(token => {
         return fetch(
-          "your firebase API to fetch" +
+          FETCH_DATA_API +
             token
         );
       })
       .catch(() => {
-        alert("No valid token found!");
+        alert('No valid token found!');
       })
       .then(res => {
         if (res.ok) {
@@ -122,7 +123,7 @@ export const getPlaces = () => {
         dispatch(setPlaces(places));
       })
       .catch(err => {
-        alert("Something went wrong, sorry :/");
+        alert('Something went wrong, sorry :/');
         console.log(err);
       });
   };
@@ -139,17 +140,17 @@ export const deletePlace = key => {
   return dispatch => {
     dispatch(authGetToken())
       .catch(() => {
-        alert("No valid token found!");
+        alert('No valid token found!');
       })
       .then(token => {
         dispatch(removePlace(key));
         return fetch(
-          "your firebase API to fetch" +
+          FETCH_DATA_API +
             key +
-            ".json?auth=" +
+            '.json?auth=' +
             token,
           {
-            method: "DELETE"
+            method: 'DELETE'
           }
         );
       })
@@ -161,10 +162,10 @@ export const deletePlace = key => {
         }
       })
       .then(parsedRes => {
-        console.log("Done!");
+        console.log('Done!');
       })
       .catch(err => {
-        alert("Something went wrong, sorry :/");
+        alert('Something went wrong, sorry :/');
         console.log(err);
       });
   };

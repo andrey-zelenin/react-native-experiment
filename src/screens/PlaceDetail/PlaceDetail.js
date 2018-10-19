@@ -1,37 +1,36 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   View,
   Image,
   Text,
-  Button,
   StyleSheet,
   TouchableOpacity,
   Platform,
   Dimensions
-} from "react-native";
-import { connect } from "react-redux";
-import MapView from "react-native-maps";
+} from 'react-native';
+import { connect } from 'react-redux';
+import MapView from 'react-native-maps';
 
-import Icon from "react-native-vector-icons/Ionicons";
-import { deletePlace } from "../../store/actions/index";
+import Icon from 'react-native-vector-icons/Ionicons';
+import { deletePlace } from '../../store/actions/index';
 
 class PlaceDetail extends Component {
   state = {
-    viewMode: "portrait"
+    viewMode: 'portrait'
   };
 
   constructor(props) {
     super(props);
-    Dimensions.addEventListener("change", this.updateStyles);
+    Dimensions.addEventListener('change', this.updateStyles);
   }
 
   componentWillUnmount() {
-    Dimensions.removeEventListener("change", this.updateStyles);
+    Dimensions.removeEventListener('change', this.updateStyles);
   }
 
   updateStyles = dims => {
     this.setState({
-      viewMode: dims.window.height > 500 ? "portrait" : "landscape"
+      viewMode: dims.window.height > 500 ? 'portrait' : 'landscape'
     });
   };
 
@@ -45,7 +44,7 @@ class PlaceDetail extends Component {
       <View
         style={[
           styles.container,
-          this.state.viewMode === "portrait"
+          this.state.viewMode === 'portrait'
             ? styles.portraitContainer
             : styles.landscapeContainer
         ]}
@@ -63,8 +62,8 @@ class PlaceDetail extends Component {
                 ...this.props.selectedPlace.location,
                 latitudeDelta: 0.0122,
                 longitudeDelta:
-                  Dimensions.get("window").width /
-                  Dimensions.get("window").height *
+                  Dimensions.get('window').width /
+                  Dimensions.get('window').height *
                   0.0122
               }}
               style={styles.map}
@@ -84,8 +83,8 @@ class PlaceDetail extends Component {
               <View style={styles.deleteButton}>
                 <Icon
                   size={30}
-                  name={Platform.OS === "android" ? "md-trash" : "ios-trash"}
-                  color="red"
+                  name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
+                  color='red'
                 />
               </View>
             </TouchableOpacity>
@@ -102,28 +101,28 @@ const styles = StyleSheet.create({
     flex: 1
   },
   portraitContainer: {
-    flexDirection: "column"
+    flexDirection: 'column'
   },
   landscapeContainer: {
-    flexDirection: "row"
+    flexDirection: 'row'
   },
   placeDetailContainer: {
     flex: 2
   },
   placeImage: {
-    width: "100%",
-    height: "100%"
+    width: '100%',
+    height: '100%'
   },
   placeName: {
-    fontWeight: "bold",
-    textAlign: "center",
+    fontWeight: 'bold',
+    textAlign: 'center',
     fontSize: 28
   },
   map: {
     ...StyleSheet.absoluteFillObject
   },
   deleteButton: {
-    alignItems: "center"
+    alignItems: 'center'
   },
   subContainer: {
     flex: 1

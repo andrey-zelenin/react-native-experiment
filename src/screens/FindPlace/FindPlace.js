@@ -1,19 +1,19 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
   StyleSheet,
   Animated
-} from "react-native";
-import { connect } from "react-redux";
+} from 'react-native';
+import { connect } from 'react-redux';
 
-import PlaceList from "../../components/PlaceList/PlaceList";
-import { getPlaces } from "../../store/actions/index";
+import PlaceList from '../../components/PlaceList/PlaceList';
+import { getPlaces } from '../../store/actions/index';
 
 class FindPlaceScreen extends Component {
   static navigatorStyle = {
-    navBarButtonColor: "orange"
+    navBarButtonColor: 'orange'
   };
 
   state = {
@@ -28,18 +28,18 @@ class FindPlaceScreen extends Component {
   }
 
   onNavigatorEvent = event => {
-    if (event.type === "ScreenChangedEvent") {
-      if (event.id === "willAppear") {
+    if (event.type === 'ScreenChangedEvent') {
+      if (event.id === 'willAppear') {
         this.props.onLoadPlaces();
         // this.setState({
         //   placesLoaded: false
         // });
       }
     }
-    if (event.type === "NavBarButtonPress") {
-      if (event.id === "sideDrawerToggle") {
+    if (event.type === 'NavBarButtonPress') {
+      if (event.id === 'sideDrawerToggle') {
         this.props.navigator.toggleDrawer({
-          side: "left"
+          side: 'left'
         });
       }
     }
@@ -71,7 +71,7 @@ class FindPlaceScreen extends Component {
       return place.key === key;
     });
     this.props.navigator.push({
-      screen: "awesome-places.PlaceDetailScreen",
+      screen: 'awesome-places.PlaceDetailScreen',
       title: selPlace.name,
       passProps: {
         selectedPlace: selPlace
@@ -126,18 +126,18 @@ class FindPlaceScreen extends Component {
 const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   searchButton: {
-    borderColor: "orange",
+    borderColor: 'orange',
     borderWidth: 3,
     borderRadius: 50,
     padding: 20
   },
   searchButtonText: {
-    color: "orange",
-    fontWeight: "bold",
+    color: 'orange',
+    fontWeight: 'bold',
     fontSize: 26
   }
 });

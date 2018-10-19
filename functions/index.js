@@ -1,13 +1,13 @@
-const functions = require("firebase-functions");
-const admin = require("firebase-admin");
-const cors = require("cors")({ origin: true });
-const fs = require("fs");
-const UUID = require("uuid-v4");
-const serviceAccount = require(""); // your account key json file
+const functions = require('firebase-functions');
+const admin = require('firebase-admin');
+const cors = require('cors')({ origin: true });
+const fs = require('fs');
+const UUID = require('uuid-v4');
+const serviceAccount = require(''); // your account key json file
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  storageBucket: "" // your storage bucket
+  storageBucket: '' // your storage bucket
 });
 
 const bucket = admin.storage().bucket();
@@ -19,23 +19,23 @@ exports.storeImage = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     if (
       !request.headers.authorization ||
-      !request.headers.authorization.startsWith("Bearer ")
+      !request.headers.authorization.startsWith('Bearer ')
     ) {
-      console.log("No token present!");
-      response.status(403).json({ error: "Unauthorized" });
+      console.log('No token present!');
+      response.status(403).json({ error: 'Unauthorized' });
       return;
     }
     let idToken;
-    idToken = request.headers.authorization.split("Bearer ")[1];
+    idToken = request.headers.authorization.split('Bearer ')[1];
     admin
       .auth()
       .verifyIdToken(idToken)
       .then(decodedToken => {
         const body = JSON.parse(request.body);
         fs.writeFileSync(
-          "/tmp/uploaded-image.jpg",
+          '/tmp/uploaded-image.jpg',
           body.image,
-          "base64",
+          'base64',
           err => {
             console.log(err);
             return response.status(500).json({ error: err });
@@ -44,13 +44,13 @@ exports.storeImage = functions.https.onRequest((request, response) => {
         const uuid = UUID();
 
         bucket.upload(
-          "/tmp/uploaded-image.jpg",
+          '/tmp/uploaded-image.jpg',
           {
-            uploadType: "media",
-            destination: "/places/" + uuid + ".jpg",
+            uploadType: 'media',
+            destination: '/places/' + uuid + '.jpg',
             metadata: {
               metadata: {
-                contentType: "image/jpeg",
+                contentType: 'image/jpeg',
                 firebaseStorageDownloadTokens: uuid
               }
             }
@@ -59,13 +59,13 @@ exports.storeImage = functions.https.onRequest((request, response) => {
             if (!err) {
               response.status(201).json({
                 imageUrl:
-                  "https://firebasestorage.googleapis.com/v0/b/" +
+                  'https://firebasestorage.googleapis.com/v0/b/' +
                   bucket.name +
-                  "/o/" +
+                  '/o/' +
                   encodeURIComponent(file.name) +
-                  "?alt=media&token=" +
+                  '?alt=media&token=' +
                   uuid,
-                imagePath: "/places/" + uuid + ".jpg"
+                imagePath: '/places/' + uuid + '.jpg'
               });
             } else {
               console.log(err);
@@ -75,13 +75,13 @@ exports.storeImage = functions.https.onRequest((request, response) => {
         );
       })
       .catch(error => {
-        console.log("Token is invalid!");
-        response.status(403).json({ error: "Unauthorized" });
+        console.log('Token is invalid!');
+        response.status(403).json({ error: 'Unauthorized' });
       });
   });
 });
 
-exports.deleteImage = functions.database.ref("/places/{placeId}") .onDelete(snap => {
+exports.deleteImage = functions.database.ref('/places/{placeId}') .onDelete(snap => {
     const placeData = snap.val();
     const imagePath = placeData.imagePath;
 

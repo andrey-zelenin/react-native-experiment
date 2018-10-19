@@ -1,28 +1,25 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   View,
-  Text,
-  TextInput,
   Button,
   StyleSheet,
   ScrollView,
-  Image,
   ActivityIndicator
-} from "react-native";
-import { connect } from "react-redux";
+} from 'react-native';
+import { connect } from 'react-redux';
 
-import { addPlace } from "../../store/actions/index";
-import PlaceInput from "../../components/PlaceInput/PlaceInput";
-import MainText from "../../components/UI/MainText/MainText";
-import HeadingText from "../../components/UI/HeadingText/HeadingText";
-import PickImage from "../../components/PickImage/PickImage";
-import PickLocation from "../../components/PickLocation/PickLocation";
-import validate from "../../utility/validation";
-import { startAddPlace } from "../../store/actions/index";
+import { addPlace } from '../../store/actions/index';
+import PlaceInput from '../../components/PlaceInput/PlaceInput';
+import MainText from '../../components/UI/MainText/MainText';
+import HeadingText from '../../components/UI/HeadingText/HeadingText';
+import PickImage from '../../components/PickImage/PickImage';
+import PickLocation from '../../components/PickLocation/PickLocation';
+import validate from '../../utility/validation';
+import { startAddPlace } from '../../store/actions/index';
 
 class SharePlaceScreen extends Component {
   static navigatorStyle = {
-    navBarButtonColor: "orange"
+    navBarButtonColor: 'orange'
   };
 
   constructor(props) {
@@ -38,7 +35,7 @@ class SharePlaceScreen extends Component {
     this.setState({
       controls: {
         placeName: {
-          value: "",
+          value: '',
           valid: false,
           touched: false,
           validationRules: {
@@ -65,15 +62,15 @@ class SharePlaceScreen extends Component {
   }
 
   onNavigatorEvent = event => {
-    if (event.type === "ScreenChangedEvent") {
-      if (event.id === "willAppear") {
+    if (event.type === 'ScreenChangedEvent') {
+      if (event.id === 'willAppear') {
         this.props.onStartAddPlace();
       }
     }
-    if (event.type === "NavBarButtonPress") {
-      if (event.id === "sideDrawerToggle") {
+    if (event.type === 'NavBarButtonPress') {
+      if (event.id === 'sideDrawerToggle') {
         this.props.navigator.toggleDrawer({
-          side: "left"
+          side: 'left'
         });
       }
     }
@@ -138,7 +135,7 @@ class SharePlaceScreen extends Component {
   render() {
     let submitButton = (
       <Button
-        title="Share the Place!"
+        title='Share the Place!'
         onPress={this.placeAddedHandler}
         disabled={
           !this.state.controls.placeName.valid ||
@@ -180,21 +177,21 @@ class SharePlaceScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center"
+    alignItems: 'center'
   },
   placeholder: {
     borderWidth: 1,
-    borderColor: "black",
-    backgroundColor: "#eee",
-    width: "80%",
+    borderColor: 'black',
+    backgroundColor: '#eee',
+    width: '80%',
     height: 150
   },
   button: {
     margin: 8
   },
   previewImage: {
-    width: "100%",
-    height: "100%"
+    width: '100%',
+    height: '100%'
   }
 });
 
