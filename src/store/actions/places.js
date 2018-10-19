@@ -56,8 +56,7 @@ export const addPlace = (placeName, location, image) => {
           imagePath: parsedRes.imagePath
         };
         return fetch(
-          FETCH_DATA_API +
-            authToken,
+          FETCH_DATA_API + '/places.json?auth=' + authToken,
           {
             method: 'POST',
             body: JSON.stringify(placeData)
@@ -94,10 +93,7 @@ export const getPlaces = () => {
   return dispatch => {
     dispatch(authGetToken())
       .then(token => {
-        return fetch(
-          FETCH_DATA_API +
-            token
-        );
+        return fetch(FETCH_DATA_API + '/places.json?auth=' + token);
       })
       .catch(() => {
         alert('No valid token found!');
@@ -145,10 +141,7 @@ export const deletePlace = key => {
       .then(token => {
         dispatch(removePlace(key));
         return fetch(
-          FETCH_DATA_API +
-            key +
-            '.json?auth=' +
-            token,
+          FETCH_DATA_API + '/places/' + key + '.json?auth=' +  token,
           {
             method: 'DELETE'
           }
